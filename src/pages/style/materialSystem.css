@@ -1,0 +1,9 @@
+.line {
+  border: 0;
+  background-color:rgb(4, 210, 247);
+  height: 5px;
+  width: 15%;
+  cursor: pointer;
+  text-align: center;
+  margin:0 auto;
+}
