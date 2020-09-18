@@ -33,8 +33,8 @@ class PurchaseRequestForm extends React.Component {
     if (!this.state.tableData) {
       this.setState({ tableError: true });
     } else if (this.state.tableData) {
-      console.log({ ...formValues, tableData: this.state.tableData });
       this.props.onSubmit({ ...formValues, tableData: this.state.tableData });
+      console.log({ ...formValues, RequiredOn: new Date(formValues.RequiredOn).toISOString()});
       this.setState({ tableError: false });
     }
   };
@@ -93,7 +93,7 @@ class PurchaseRequestForm extends React.Component {
               style={{ width: "90%", margin: "1rem" }}
             />
           </div>
-          <div >
+          <div>
             <Field
               name="Currency"
               label="Currency"
@@ -142,6 +142,7 @@ class PurchaseRequestForm extends React.Component {
               name="RequiredOn"
               component={this.renderTextField}
               label="Required On"
+              type="date"
               style={{ width: "20%", margin: "1rem" }}
             />
             <Field

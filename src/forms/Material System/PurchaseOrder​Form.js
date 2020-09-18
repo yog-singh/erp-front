@@ -87,6 +87,7 @@ class PurchaseOrderForm extends React.Component {
             <Field
               name="PurchaseRequestNo"
               component={this.renderTextField}
+             
               label="Purchase Request No"
               style={{ width: "38%", margin: "1rem" }}
             />
@@ -291,5 +292,3 @@ export default reduxForm({
   form: "PurchaseOrderForm",
   validate
 })(PurchaseOrderForm);
-
-

@@ -15,7 +15,6 @@ const PurchaseRequestFormEdit = props => {
   const history = useHistory();
   const dispatch = useDispatch();
   const store = useSelector(store => store.materialSystemRoot);
-
   useEffect(() => {
     dispatch(searchPurchaseRequestById(props.match.params.purchaseRequestId));
   }, [props.match.params.purchaseRequestId]);
@@ -26,10 +25,14 @@ const PurchaseRequestFormEdit = props => {
     }
   }, [store.SinglePurchaseRequest]);
 
-  const onSubmit = (formValues,history) => {
+  const onSubmit = (formValues, history) => {
     console.log(history);
     dispatch(
-      editPurchaseRequest(formValues, props.match.params.purchaseRequestId,history)
+      editPurchaseRequest(
+        formValues,
+        props.match.params.purchaseRequestId,
+        history
+      )
     );
   };
   return (
@@ -39,7 +42,7 @@ const PurchaseRequestFormEdit = props => {
       </h3>
       <div className="line"></div>
       <PurchaseRequestForm
-        onSubmit={onSubmit}
+        onSubmit={(formValues) => onSubmit(formValues, history)}
         initialValues={_.pick(
           purchaseRequest,
           "TotalPRValue",
