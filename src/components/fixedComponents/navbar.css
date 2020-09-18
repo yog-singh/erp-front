@@ -1,6 +1,5 @@
 /* Fixed sidenav, full height */
 .sidebar {
-
   display: flex;
   justify-content: center;
 }
@@ -11,7 +10,7 @@
   z-index: 1;
   top: 40px;
   left: 0;
-  background-color: #111;
+  background-color: #1d7e93;
   overflow-x: hidden;
   padding-top: 20px;
   transition: all 0.5s linear;
@@ -24,29 +23,36 @@
   color: #f1f1f1;
   display: block;
   border: none;
-  background: none;
+  background: transparent;
   width: 100%;
   text-align: left;
   cursor: pointer;
   outline: none;
-  display:flex;
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .dropdown-btn:focus {
   outline: none;
 }
-.sidenav a {
+.sidenav {
   border-radius: 10px;
+}
+.sidenav a {
+  background: #165664;
   color: #818181;
 }
 .sidenav a:hover,
 .dropdown-btn:hover {
   color: #f1f1f1;
 }
+
+.makeStyles-grow-3 header {
+  background: #165664;
+}
 .main {
-  margin-left: 200px; 
-  font-size: 30px; 
+  margin-left: 200px;
+  font-size: 30px;
   padding: 0px 10px;
 }
 .active {
@@ -56,15 +62,18 @@
 .dropdown-container {
   opacity: 0;
   transition: all 0.5s ease-in;
-  background-color: #262626;
-  padding-left: 8px;
+  padding: 4px;
+  background: #165664;
+border-radius: 10px;
 }
 .dropdown-open {
   opacity: 1;
 }
 .sidenav .on-active {
-  background: black;
+  background: #1d7e93;
   color: white;
+border-radius: 10px;
+
 }
 .close {
   width: 0;

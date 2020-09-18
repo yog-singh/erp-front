@@ -1,39 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
-import { allPurchaseRequest } from '../../redux/actions/materialSystemAction'
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { allPurchaseRequest } from "../../redux/actions/materialSystemAction";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import UpdateIcon from "@material-ui/icons/Update";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import { link } from "react-router-dom";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import "./Table.css";
 
 const Table = props => {
-  const dispatch = useDispatch()
-  const store = useSelector(store => store)
-  const [lists, setLists] = useState([])
+  const dispatch = useDispatch();
+  const store = useSelector(store => store);
+  const [lists, setLists] = useState([]);
   useEffect(() => {
-    dispatch(allPurchaseRequest())
-  }, [])
+    dispatch(allPurchaseRequest());
+  }, []);
 
   useEffect(() => {
     if (store.materialSystemRoot.AllPurchaseRequest.length !== 0) {
-      setLists(store.materialSystemRoot.AllPurchaseRequest)
+      setLists(store.materialSystemRoot.AllPurchaseRequest);
     }
-  }, [store.materialSystemRoot.AllPurchaseRequest])
-  const userMatch = (id) => {
-    return <>
-      <span>
-        <Link to={`/purchaserequest/edit/${id}`}><EditIcon color="action" /></Link>
-      </span>
-      <span>
-        {/* button */}
-        <DeleteForeverIcon color="secondary" />
-      </span>
-    </>
-
+  }, [store.materialSystemRoot.AllPurchaseRequest]);
+  const userMatch = id => {
+    return (
+      <>
+        <span>
+          <Link to={`/purchaserequest/edit/${id}`}>
+            <EditIcon color="action" />
+          </Link>
+        </span>
+        <span>
+          <DeleteForeverIcon color="secondary" />
+        </span>
+      </>
+    );
   };
   const Status = {
     approved: {
@@ -45,7 +49,7 @@ const Table = props => {
       )
     },
     not_reviewed: {
-      class: "notReviewed",
+      class: "neutral",
       icons: (
         <div className="">
           <h5>Not Reviewed</h5>
@@ -62,18 +66,14 @@ const Table = props => {
     }
   };
 
-
-
-
-
   const renderList = () => {
     const tableRow = lists.map(list => {
-      const { status } = list;
+      const { Status } = list;
       return (
         <>
-          <tr >
+          <tr>
             <td>
-              <ListAltIcon color="primary" /> {}
+              <ListAltIcon color="primary" /> {list.ProjectCodeName}
             </td>
             <td>
               <PermIdentityIcon color="primary" />
@@ -84,11 +84,17 @@ const Table = props => {
             </td>
             <td>
               <span>
-                <Link to={`/purchaserequest/edit/${list.id}`}><VisibilityIcon color="primary" /></Link>
+                <Link to={`/purchaserequest/edit/${list.id}`}>
+                  <VisibilityIcon color="primary" />
+                </Link>
               </span>
-              {list.created_by.id === store.userRoot.user.id ? userMatch(list.id) : ""}
+              {list.created_by.id === store.userRoot.user.id
+                ? userMatch(list.id)
+                : ""}
             </td>
-            <td>{Status[status].icons}</td>
+            <td> <div className="">
+              <h5>{Status}</h5>
+            </div></td>
           </tr>
         </>
       );
@@ -97,15 +103,14 @@ const Table = props => {
   };
 
   return (
-
     <div className="table-container">
-
+      <h2 className="text-center">Purchase Request</h2>
       <h2 className="text-center">{props.heading}</h2>
       <div className="table-responsive">
         <table className="table">
           <thead>
             <tr>
-              <th></th>
+              <th>ProjectCode / Name</th>
               <th>Request by</th>
               <th>Date</th>
               <th>Operations</th>
@@ -114,6 +119,13 @@ const Table = props => {
           </thead>
           <tbody>{renderList()}</tbody>
         </table>
+      </div>
+      <div className="flexBox">
+        <Link to="/purchaserequest/create">
+          <button>
+            <AddCircleIcon /> Add
+          </button>
+        </Link>
       </div>
     </div>
   );

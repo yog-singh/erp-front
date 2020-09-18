@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import _ from "lodash";
-import PurchaseOrderAmendmentForm from "../../forms/Material System​/PurchaseOrderAmendmentForm";
+import PurchaseOrderAmendmentForm from "../../forms/Material System/PurchaseOrderAmendmentForm";
 import '../style/materialSystem.css'
 
 

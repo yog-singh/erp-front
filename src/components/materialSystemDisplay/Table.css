@@ -9,12 +9,16 @@
   width: 90%;
   text-align: center;
 }
+.flexBox {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
 td span {
   margin: 0 0.5rem;
 }
 
 tbody tr {
-  /*  */
   background-image: linear-gradient(
     to right top,
     #ffffff,

@@ -5,11 +5,9 @@ import { userLoginHelper, userLogout } from "./redux/actions/userAction";
 import setAuthToken from "./redux/helper/setAuthToken";
 import store from "./redux/store";
 
-
-import PurchaseRequestForm from "./forms/Material System​/PurchaseRequestForm";
-//All Pages
+// import PurchaseRequestForm from "./forms/Material System​/PurchaseRequestForm";
 import LoginPage from "./pages/LoginPage";
-import Dashboard from "./pages/Dashboard";
+// import Dashboard from "./pages/Dashboard";
 import PurchaseRequest from "./pages/PurchaseRequest";
 import PurchaseOrderFormCreate from "./pages/Material System​ Page/PurchaseOrderFormCreate";
 import PurchaseOrderEdit from "./pages/Material System​ Page/PurchaseOrderFromEdit";
@@ -23,19 +21,18 @@ import GoodsInspectionVoucherFormEdit from "./pages/Material System​ Page/Good
 import GoodsInspectionVoucherFormCreate from "./pages/Material System​ Page/GoodsInspectionVoucherFormCreate";
 import WarehouseReceiptVoucherformCreate from "./pages/Material System​ Page/WarehouseReceiptVoucherformCreate";
 import WarehouseReceiptVoucherformEdit from "./pages/Material System​ Page/WarehouseReceiptVoucherformEdit";
-import CurrentForm from "./forms/Material System​/WarehouseReceiptVoucherform";
-import Navbar from './components/fixedComponents/navbar'
-import Table from './components/materialSystemDisplay/Table'
+import CurrentForm from "./Tables/MaterialSystem/PurchaseOrderTable/PurchaseOrder";
+import Navbar from "./components/fixedComponents/navbar";
+import Table from "./components/materialSystemDisplay/Table";
 
 if (window.localStorage.userJwtToken) {
-
   setAuthToken(localStorage.userJwtToken);
   const decoded = jwt_decode(localStorage.userJwtToken);
   store.dispatch(userLoginHelper(decoded.user));
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     store.dispatch(userLogout());
-    console.log("logging out")
+    console.log("logging out");
     window.location.href = "/";
   }
 }
@@ -47,13 +44,13 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path="/" component={LoginPage} />
-          <Route exact path="/dashboard" component={Table} />
-          <Route exact path="/purchaseRequest" component={PurchaseRequest} />
-          <Route
+          <Route exact path="/purchaserequest" component={Table} />
+          {/* <Route exact path="/purchaseRequest" component={PurchaseRequest} /> */}
+          {/* <Route
             exact
             path="/purchaserequestform"
             component={PurchaseRequestForm}
-          />
+          /> */}
           <Route
             exact
             path="/purchaseorder/create"
@@ -84,7 +81,6 @@ function App() {
             path="/warehousereceiptvoucherform/create"
             component={WarehouseReceiptVoucherformCreate}
           />
-
           <Route exact path="/current" component={CurrentForm} />
           {/* use /:Id for fetch the data */}
           <Route

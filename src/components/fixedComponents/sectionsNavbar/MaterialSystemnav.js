@@ -4,7 +4,7 @@ export const materialSystemComponents = [
     label: "Purchase Order"
   },
   {
-    to: "/purchaserequest/create",
+    to: "/purchaserequest",
     label: "Purchase Request"
   },
   {

@@ -5,13 +5,38 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import ExcelUpload from "../../components/ExcelUpload";
+import Table from "../../Tables/MaterialSystem/PurchaseRequestTable/PurchaseRequestTable";
 import "./PurchaseRequestForm.css";
-
 class PurchaseRequestForm extends React.Component {
-  state = { excelData: null, excelError: false };
+  state = {
+    tableData: null,
+    tableError: false,
+    tableErrorKind: "",
+    isSubmit: false,
+    both: false
+  };
   excelData = data => {
     this.setState({ excelData: data, excelError: false });
+  };
+  tableData = data => {
+    if (data.error) {
+      this.setState({ tableErrorKind: data.errorKind, tableError: true });
+    } else {
+      this.setState({ tableData: data, tableErrorKind: "", tableError: false });
+    }
+  };
+  handleSubmit = formValues => {
+    console.log(formValues);
+    this.onSubmit(formValues);
+  };
+  onSubmit = formValues => {
+    if (!this.state.tableData) {
+      this.setState({ tableError: true });
+    } else if (this.state.tableData) {
+      console.log({ ...formValues, tableData: this.state.tableData });
+      this.props.onSubmit({ ...formValues, tableData: this.state.tableData });
+      this.setState({ tableError: false });
+    }
   };
   renderFromHelper = ({ touched, error }) => {
     if (!(touched && error)) {
@@ -20,7 +45,6 @@ class PurchaseRequestForm extends React.Component {
       return <FormHelperText>{touched && error}</FormHelperText>;
     }
   };
-
   renderSelectField = ({
     input,
     label,
@@ -57,29 +81,21 @@ class PurchaseRequestForm extends React.Component {
       {...custom}
     />
   );
-  onSubmit = formValues => {
-    if (!this.state.excelData) {
-      this.setState({ excelError: true });
-    } else {
-      this.props.onSubmit({ ...formValues, excelData: this.state.excelData });     
-      this.setState({ excelError: false });
-    }
-  };
   render() {
     return (
       <div className="formcontainer">
-        <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+        <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
           <div>
             <Field
-              name="ProjectCode"
+              name="ProjectCodeName"
               component={this.renderTextField}
               label="ProjectCode / Name"
               style={{ width: "90%", margin: "1rem" }}
             />
           </div>
-          <div className="">
+          <div >
             <Field
-              name="Currency​"
+              name="Currency"
               label="Currency"
               component={this.renderTextField}
               style={{ width: "20%", margin: "1rem" }}
@@ -103,7 +119,7 @@ class PurchaseRequestForm extends React.Component {
           <div className="">
             <Field
               component={this.renderSelectField}
-              name="billToCustomer​"
+              name="BilltoCustomer"
               label="Bill to Customer (For Project PR)​"
             >
               <option value="" />
@@ -148,22 +164,30 @@ class PurchaseRequestForm extends React.Component {
               style={{ width: "90%", margin: "1rem" }}
             />
           </div>
-          <div className="">
+          <div>
             <Field
-              name="TotalPRValue​"
+              name="TotalPRValue"
               component={this.renderTextField}
               label="Total PR Value​"
-              type="number"
               style={{ width: "20%", margin: "1rem" }}
             />
           </div>
-          <div className="excel ">
-            <ExcelUpload
-              excelData={this.excelData}
-              error={this.state.excelError}
+          <div className="">
+            <Table
+              tableData={this.tableData}
+              materials={this.props.materials}
             />
+            <div className="middle">
+              <p className=" Mui-error excelError">
+                {this.state.tableError ? `${this.state.tableErrorKind}` : ""}
+              </p>
+            </div>
+          </div>
+          <div className="middle">
             <p className=" Mui-error excelError">
-              {this.state.excelError ? "Requires" : ""}
+              {this.state.both
+                ? "You cannot send both table and excel data"
+                : ""}
             </p>
           </div>
           <div className="middle">
@@ -192,16 +216,16 @@ class PurchaseRequestForm extends React.Component {
 const validate = values => {
   const errors = {};
   const requiredFields = [
-    "billToCustomer​",
-    "ProjectCode",
-    "Currency​",
+    "TotalPRValue",
+    "BilltoCustomer",
+    "ProjectCodeName",
+    "Currency",
     "WarehouseName",
     "PurchaseCategory",
     "DeliveryAt",
     "RequiredOn",
     "PRType",
-    "Remarks",
-    "TotalPRValue​"
+    "Remarks"
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
@@ -213,5 +237,6 @@ const validate = values => {
 
 export default reduxForm({
   form: "PurchaseRequestForm",
-  validate
+  validate,
+  enableReinitialize: true
 })(PurchaseRequestForm);

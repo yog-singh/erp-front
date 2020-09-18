@@ -4,6 +4,14 @@
   justify-content: center;
   align-items: center;
   font-family: "Roboto", sans-serif;
+  background-image: radial-gradient(
+    circle,
+    #ffffff,
+    #f4f5f8,
+    #e6ecf1,
+    #d6e3e9,
+    #c7dbde
+  );
 }
 .form-login {
   width: 90%;

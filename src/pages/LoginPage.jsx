@@ -46,7 +46,7 @@ const Login = () => {
           <div className="col-md-5 m-auto">
             <form onSubmit={formSubmitHandler} className="form-login">
               <h6 className="text-center login-header1">Login</h6>
-              <h6 className="text-center login-header">SignI    n to account</h6>
+              <h6 className="text-center login-header">SignIn to account</h6>
               <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email </label>
                 <input
